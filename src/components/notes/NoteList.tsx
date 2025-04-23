@@ -122,12 +122,18 @@ export function NoteList() {
          setExpandedSummaries(prev => ({ ...prev, [note.id]: true }));
 
          toast.success(`Summary generated and saved for note "${note.title || 'Untitled Note'}"!`);
-     } catch (error: any) {
-         console.error(`[handleSummarize] Error for note ID ${note.id}:`, error);
-         toast.error(`Failed to get or save summary: ${error.message}`);
-     } finally {
-         setSummarizingNoteId(null);
-     }
+     }  catch (error: unknown) { // Change 'any' to 'unknown'
+        console.error(`[handleSummarize] Error for note ID ${note.id}:`, error);
+        let errorMessage = "Failed to get or save summary";
+        if (error instanceof Error) {
+            errorMessage = error.message;
+        } else if (typeof error === 'string') {
+             errorMessage = error;
+        }
+        toast.error(`Error: ${errorMessage}`); // Use parsed message
+    } finally {
+        setSummarizingNoteId(null);
+    }
   };
 
 
@@ -229,11 +235,11 @@ export function NoteList() {
                           </AlertDialogTrigger>
                         </DropdownMenuContent>
                       </DropdownMenu>
-                      {/* Delete Confirmation Dialog */}
+                
                       <AlertDialogContent>
                          <AlertDialogHeader>
                             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                            <AlertDialogDescription>This will permanently delete "{note.title || 'Untitled Note'}".</AlertDialogDescription>
+                            <AlertDialogDescription>This will permanently delete {note.title || 'Untitled Note'}.</AlertDialogDescription>
                          </AlertDialogHeader>
                          <AlertDialogFooter>
                             <AlertDialogCancel disabled={deleteNoteMutation.isPending}>Cancel</AlertDialogCancel>
@@ -313,7 +319,7 @@ export function NoteList() {
           <SheetContent onInteractOutside={closeSheet} onEscapeKeyDown={closeSheet} className="sm:max-w-lg w-[90vw]">
               <SheetHeader>
                   <SheetTitle>Edit Note</SheetTitle>
-                  <SheetDescription>Make changes to your note. Click 'Save Changes' when done.</SheetDescription>
+                  <SheetDescription>Make changes to your note. Click Save Changes when done.</SheetDescription>
               </SheetHeader>
               {editingNote && <NoteForm initialData={editingNote} onSuccess={closeSheet} />}
           </SheetContent>

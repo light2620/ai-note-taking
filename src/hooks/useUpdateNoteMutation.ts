@@ -1,7 +1,6 @@
 // src/hooks/useUpdateNoteMutation.ts
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateNote, type UpdateNoteData } from '@/lib/supabase/notes-api';
-import type { Note } from '@/types/note';
 import { useSupabase } from '@/components/providers/SupabaseProvider';
 
 export const useUpdateNoteMutation = () => {

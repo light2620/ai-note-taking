@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getNotes } from '@/lib/supabase/notes-api';
 import { useSupabase } from '@/components/providers/SupabaseProvider';
-import type { Note } from '@/types/note'; // Import the Note type
+import type { Note } from '@/types/note';
 
 export const useNotesQuery = () => {
   const { session } = useSupabase();

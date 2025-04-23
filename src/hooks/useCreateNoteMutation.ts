@@ -2,7 +2,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createNote } from '@/lib/supabase/notes-api';
 import { useSupabase } from '@/components/providers/SupabaseProvider';
-import type { Note } from '@/types/note';
+
 
 export const useCreateNoteMutation = () => {
   const queryClient = useQueryClient();
