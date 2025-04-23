@@ -180,14 +180,14 @@ export function NoteList() {
     <>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {notes.map((note) => {
-          // --- Calculate States for Current Note ---
+      
           const isSummarizing = summarizingNoteId === note.id;
           const trimmedContentLength = note.content?.trim().length ?? 0;
           const hasContent = trimmedContentLength > 0;
           const hasEnoughContent = hasContent && trimmedContentLength >= MIN_CONTENT_LENGTH_FOR_SUMMARY;
           const isSummaryExpanded = expandedSummaries[note.id] || false; // Default to false if not set
 
-          // --- Determine Tooltip and Disabled State for Summarize Button ---
+     
           let summarizeButtonTooltip = "";
           if (isSummarizing) {
               summarizeButtonTooltip = "Summarization in progress...";
@@ -202,14 +202,13 @@ export function NoteList() {
           }
           const isSummarizeButtonDisabled = isSummarizing || !hasEnoughContent;
 
-          // --- Return Card JSX ---
           return (
             <Card key={note.id} className="flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow duration-200">
-              <div> {/* Wrapper for Header and Content */}
+              <div> 
                 <CardHeader>
                   <CardTitle className="flex justify-between items-start gap-2">
                     <span className="break-words flex-1">{note.title || 'Untitled Note'}</span>
-                    {/* Actions Dropdown Menu */}
+                 
                     <AlertDialog>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -249,25 +248,24 @@ export function NoteList() {
                     Created: {new Date(note.created_at).toLocaleDateString()}
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-3 flex-grow pb-4"> {/* Add padding bottom */}
-                  {/* Note Content Snippet */}
+                <CardContent className="space-y-3 flex-grow pb-4"> 
+               
                   <p className="text-sm line-clamp-4 whitespace-pre-wrap">
                     {note.content || <span className="text-muted-foreground italic">No content</span>}
                   </p>
 
-                  {/* Display Summary with Read More/Less */}
+    
                   {note.summary && (
-                    <div className="border-t pt-3 mt-3 space-y-1.5"> {/* Add space below summary */}
+                    <div className="border-t pt-3 mt-3 space-y-1.5"> 
                       <h4 className="text-xs font-semibold text-primary/90 uppercase tracking-wider">Summary</h4>
-                      {/* Apply line-clamp conditionally */}
+                
                       <p className={cn(
                           "text-sm text-muted-foreground italic whitespace-pre-wrap",
-                          !isSummaryExpanded && SUMMARY_LINE_CLAMP // Only apply clamp if not expanded
+                          !isSummaryExpanded && SUMMARY_LINE_CLAMP 
                        )}>
                         {note.summary}
                       </p>
-                      {/* Read More/Less Button - Consider only showing if content actually overflows (harder) or always if summary exists */}
-                      {/* Let's always show if summary exists for simplicity */}
+                     
                        <Button
                            variant="link"
                            size="sm"
@@ -284,7 +282,7 @@ export function NoteList() {
                   )}
                 </CardContent>
               </div>
-              {/* Card Footer */}
+    
               <CardFooter className="flex justify-between items-center text-xs text-muted-foreground pt-4 border-t">
                  <span>ID: {note.id}</span>
                  <Button
@@ -293,7 +291,7 @@ export function NoteList() {
                     onClick={() => handleSummarize(note)}
                     disabled={isSummarizeButtonDisabled}
                     title={summarizeButtonTooltip}
-                    className="gap-1" // Reduced gap
+                    className="gap-1" 
                  >
                      {isSummarizing ? (
                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -310,7 +308,7 @@ export function NoteList() {
         })}
       </div>
 
-      {/* Edit Sheet (Rendered once) */}
+
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
           <SheetContent onInteractOutside={closeSheet} onEscapeKeyDown={closeSheet} className="sm:max-w-lg w-[90vw]">
               <SheetHeader>
