@@ -159,16 +159,23 @@ export function NoteList() {
   }
 
   if (isError) {
-    // Error state... (same as before)
-    return ( <Alert variant="destructive"> /* ... */ </Alert> );
-  }
+ 
+    return (
+        <Alert variant="destructive">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertTitle>Error Loading Notes</AlertTitle>
+            <AlertDescription>
+                Failed to load notes: {error instanceof Error ? error.message : 'Unknown error'}
+            </AlertDescription>
+        </Alert>
+    );
+}
 
   if (!notes || notes.length === 0) {
-    // Empty state... (same as before)
+    
      return <p className="text-center text-muted-foreground mt-8">No notes found. Create your first note!</p>;
   }
 
-  // --- Main Render ---
   return (
     <>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

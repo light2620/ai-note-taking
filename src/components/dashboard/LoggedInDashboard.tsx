@@ -35,7 +35,7 @@ export function LoggedInDashboard() {
                         <DialogHeader>
                             <DialogTitle>Create New Note</DialogTitle>
                             <DialogDescription>
-                                Fill in the details for your new note. Click 'Create Note' when done.
+                                Fill in the details for your new note. Click Create Note when done.
                             </DialogDescription>
                         </DialogHeader>
                 

@@ -10,10 +10,8 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { toast } from 'sonner';
 import { Loader2, AlertCircle } from 'lucide-react';
 
-interface SignInFormProps {
-    onSuccess?: () => void; 
-}
-export function SignInForm({ onSuccess }: SignInFormProps) {
+
+export function SignInForm() {
     const supabase = createClient();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -29,9 +27,14 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
             const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
             if (signInError) throw signInError;
 
-        } catch (err: any) {
+        } catch (err: unknown) { 
             console.error("Error during Sign In:", err);
-            const errorMessage = err.message || "An unexpected error occurred during sign in.";
+            let errorMessage = "An unexpected error occurred during sign in.";
+            if (err instanceof Error) {
+                errorMessage = err.message;
+            } else if (typeof err === 'string') {
+                 errorMessage = err;
+            }
             setError(errorMessage);
             toast.error(`Sign In Failed: ${errorMessage}`);
         } finally {

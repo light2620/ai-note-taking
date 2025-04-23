@@ -55,10 +55,17 @@ export async function POST(request: Request) {
         console.log("[Summarize API] Summary generated successfully.");
         return NextResponse.json({ summary });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("[Summarize API] Error:", error);
+
+        let errorDetails = 'An unknown error occurred.';
+        if (error instanceof Error) {
+            errorDetails = error.message;
+        } else if (typeof error === 'string') {
+            errorDetails = error;
+        }
         return NextResponse.json(
-            { error: "An error occurred during summarization.", details: error.message },
+            { error: "An error occurred during summarization.", details: errorDetails },
             { status: 500 }
         );
     }

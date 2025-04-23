@@ -23,10 +23,16 @@ export function SocialSignIn() {
             });
             if (oauthError) throw oauthError;
             
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error("Error during Google Sign-In initiation:", err);
-            toast.error(`Google Sign-In Failed: ${err.message || 'Could not initiate sign in.'}`);
-            setIsLoading(false); 
+            let errorMessage = 'Could not initiate sign in.';
+             if (err instanceof Error) {
+                errorMessage = err.message;
+            } else if (typeof err === 'string') {
+                errorMessage = err;
+            }
+            toast.error(`Google Sign-In Failed: ${errorMessage}`);
+            setIsLoading(false);
         }
     };
 

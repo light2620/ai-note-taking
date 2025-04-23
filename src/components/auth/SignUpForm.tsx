@@ -55,9 +55,14 @@ export function SignUpForm({ onSuccessMessage }: SignUpFormProps) {
                 toast.info("Sign up process initiated.");
             }
 
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error("Error during Sign Up:", err);
-            const errorMessage = err.message || "An unexpected error occurred during sign up.";
+            let errorMessage = "An unexpected error occurred during sign up.";
+            if (err instanceof Error) {
+                errorMessage = err.message;
+            } else if (typeof err === 'string') {
+                errorMessage = err;
+            }
             setError(errorMessage);
             toast.error(`Sign Up Failed: ${errorMessage}`);
         } finally {
