@@ -1,6 +1,10 @@
 Implementation Explanation
 This section provides a brief overview of the technical implementation and architectural choices made during the development of the AI Mini Notes App.
 
+**Note**
+Only descriptions with above 50 characters summarise button works
+
+
 1. Architecture & Project Structure:
 The application utilises the Next.js App Router, leveraging its convention-based routing for UI pages (e.g., /, /auth) and server-side API endpoints (/api/summarize).
 Code is structured into logical folders within src/:
